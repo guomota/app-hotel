@@ -1,28 +1,25 @@
-package br.com.fatec.apphotel.entrypoint.validation;
+package br.com.fatec.apphotel.entrypoint.controller.exception.model.response;
+
+import java.util.List;
 
 /**
  * Classe responsável por mapear a saida do modelo de resposta 
- * dos parametros inválidos para os erros de BIND
+ * da requisção inválida para os erros de BIND
  * 
  * @author Caio Bastos
  * @since 09/10/2020
  *
  */
-public class ParametroInvalidoModelResponse {
+public class RequisicaoInvalidaModelResponse {
 
 	private String campo;
 	private String mensagem;
-	private String valor;
+	private List<ParametroInvalidoModelResponse> campos;
 	
 	/**
 	 * Construtor padrão do modelo
 	 */
-	public ParametroInvalidoModelResponse() {}
-	
-	public ParametroInvalidoModelResponse(String campo, String mensagem) {
-		this.setCampo(campo);
-		this.setMensagem(mensagem);		
-	}
+	public RequisicaoInvalidaModelResponse() {}
 
 	/**
 	 * Informa o valor do campo 'campo'
@@ -63,21 +60,21 @@ public class ParametroInvalidoModelResponse {
 	}
 
 	/**
-	 * Informa o valor do campo 'valor'
+	 * Informa o valor do campo 'campos'
 	 * 
-	 * @return valor
+	 * @return campos
 	 */
-	public String getValor() {
-		return valor;
+	public List<ParametroInvalidoModelResponse> getCampos() {
+		return campos;
 	}
 
 	/**
-	 * Define o valor para o campo 'valor' 
+	 * Define o valor para o campo 'campos' 
 	 * 
-	 * @param valor {@code String} - Valor para o
-	 * 		campo 'valor'
+	 * @param mensagem {@code ParametroInvalidoModelResponse} - Valor para o
+	 * 		campo 'campos'
 	 */
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setCampos(List<ParametroInvalidoModelResponse> campos) {
+		this.campos = campos;
 	}
 }

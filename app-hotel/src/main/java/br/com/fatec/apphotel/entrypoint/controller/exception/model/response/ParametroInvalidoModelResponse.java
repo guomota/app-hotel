@@ -1,32 +1,30 @@
-package br.com.fatec.apphotel.entrypoint.validation;
-
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+package br.com.fatec.apphotel.entrypoint.controller.exception.model.response;
 
 /**
  * Classe responsável por mapear a saida do modelo de resposta 
- * da requisção inválida para os erros de BIND
+ * dos parametros inválidos para os erros de BIND
  * 
  * @author Caio Bastos
  * @since 09/10/2020
  *
  */
-@Getter
-@Builder
-@AllArgsConstructor
-public class RequisicaoInvalidaModelResponse {
+public class ParametroInvalidoModelResponse {
 
 	private String campo;
 	private String mensagem;
-	private List<ParametroInvalidoModelResponse> campos;
 	
 	/**
 	 * Construtor padrão do modelo
 	 */
-	public RequisicaoInvalidaModelResponse() {}
+	public ParametroInvalidoModelResponse() {}
+	
+	/**
+	 * Construtor padrão do modelo
+	 */
+	public ParametroInvalidoModelResponse(String campo, String mensagem) {
+		this.campo = campo;
+		this.mensagem =  mensagem;
+	}
 
 	/**
 	 * Informa o valor do campo 'campo'
@@ -64,24 +62,5 @@ public class RequisicaoInvalidaModelResponse {
 	 */
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
-	}
-
-	/**
-	 * Informa o valor do campo 'campos'
-	 * 
-	 * @return campos
-	 */
-	public List<ParametroInvalidoModelResponse> getCampos() {
-		return campos;
-	}
-
-	/**
-	 * Define o valor para o campo 'campos' 
-	 * 
-	 * @param mensagem {@code ParametroInvalidoModelResponse} - Valor para o
-	 * 		campo 'campos'
-	 */
-	public void setCampos(List<ParametroInvalidoModelResponse> campos) {
-		this.campos = campos;
 	}
 }

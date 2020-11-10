@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.fatec.apphotel.entrypoint.exception.ValidaCampoException;
+import br.com.fatec.apphotel.entrypoint.controller.exception.ParametroInvalidoException;
+import br.com.fatec.apphotel.entrypoint.controller.exception.model.response.ParametroInvalidoModelResponse;
+import br.com.fatec.apphotel.entrypoint.controller.exception.model.response.RequisicaoInvalidaModelResponse;
 
 @Component
 public class ModelRequestValidation {
@@ -27,7 +29,7 @@ public class ModelRequestValidation {
 
 	}
 	
-	public <T> void validarCamposObrigatorio(T request) throws ValidaCampoException, JsonProcessingException {
+	public <T> void validarCamposObrigatorio(T request) throws ParametroInvalidoException, JsonProcessingException {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
@@ -42,11 +44,10 @@ public class ModelRequestValidation {
 		
 		if(!campos.isEmpty()) {
 			
-			RequisicaoInvalidaModelResponse requisicaoInvalidaModelResponse = RequisicaoInvalidaModelResponse.builder()
-					.campos(campos)
-					.build();
+			RequisicaoInvalidaModelResponse requisicaoInvalidaModelResponse = new RequisicaoInvalidaModelResponse();
+			requisicaoInvalidaModelResponse.setCampos(campos);
 			
-			throw new ValidaCampoException(objectMapper.writeValueAsString(requisicaoInvalidaModelResponse));
+			throw new ParametroInvalidoException(objectMapper.writeValueAsString(requisicaoInvalidaModelResponse));
 			
 		}
 	}
