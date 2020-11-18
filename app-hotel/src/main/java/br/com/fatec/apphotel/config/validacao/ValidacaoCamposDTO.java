@@ -1,11 +1,11 @@
 package br.com.fatec.apphotel.config.validacao;
 
-public class ErroDeFormularioDto {
+public class ValidacaoCamposDTO {
 	
 	private String campo;
 	private String erro;
 	
-	public ErroDeFormularioDto(String campo, String erro) {
+	public ValidacaoCamposDTO(String campo, String erro) {
 		this.campo = campo;
 		this.erro = erro;
 	}
