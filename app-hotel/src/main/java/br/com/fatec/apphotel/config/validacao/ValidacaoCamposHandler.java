@@ -15,24 +15,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ValidacaoCamposHandler {
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ValidacaoCamposDTO> handle(MethodArgumentNotValidException exception) {
-	
+
 		List<ValidacaoCamposDTO> validacaoCamposDTO = new ArrayList<>();
-		
+
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-		fieldErrors.forEach(e -> {
-			String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-			ValidacaoCamposDTO erro = new ValidacaoCamposDTO(e.getField(), mensagem);
+		fieldErrors.forEach(fieldError -> {
+			String mensagem = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+			ValidacaoCamposDTO erro = new ValidacaoCamposDTO(fieldError.getField(), mensagem);
 			validacaoCamposDTO.add(erro);
 		});
-		
+
 		return validacaoCamposDTO;
 	}
-
 }

@@ -4,6 +4,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import br.com.fatec.apphotel.modelo.Hospede;
+import br.com.fatec.apphotel.repository.HospedeRepository;
+
 public class HospedeEntrypointRequest {
 	
 	@NotBlank(message =  "O campo nome é obrigátorio")
@@ -43,7 +46,7 @@ public class HospedeEntrypointRequest {
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -126,6 +129,24 @@ public class HospedeEntrypointRequest {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Hospede atualizar(Long id, HospedeRepository hospedeRepository) {
+		Hospede hospede = hospedeRepository.getOne(id);
+		
+		hospede.setCpf(this.cpf);
+		hospede.setNome(this.nome);
+		hospede.setCep(this.cep);
+		hospede.setLogradouro(this.logradouro);
+		hospede.setNumero(this.numero);
+		hospede.setComplemento(this.complemento);
+		hospede.setBairro(this.bairro);
+		hospede.setCidade(this.cidade);
+		hospede.setUf(this.uf);
+		hospede.setEmail(this.email);
+		hospede.setTelefone(this.telefone);
+		
+		return hospede;
 	}
 
 }

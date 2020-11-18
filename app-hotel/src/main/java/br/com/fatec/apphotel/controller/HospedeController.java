@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,12 @@ import br.com.fatec.apphotel.controller.request.HospedeEntrypointRequest;
 import br.com.fatec.apphotel.modelo.Hospede;
 import br.com.fatec.apphotel.repository.HospedeRepository;
 
+/**
+ * Classe reesponsável por conter os endpoints referente ao hospede
+ * 
+ * @author Gustavo Mota
+ * @since 17/11/2020
+ */
 @RestController
 @RequestMapping("/hospedes")
 public class HospedeController {
@@ -31,6 +38,14 @@ public class HospedeController {
 	@Autowired
 	private HospedeRepository hospedeRepository;
 
+	/**
+	 * Método responsável por cadastrar um hospede no banco de dados
+	 * 
+	 * @param {@code HospedeEntrypointRequest}
+	 * @param {@code UriComponentsBuilder}
+	 * 
+	 * @return {@code ResponseEntity<HospedeDTO>}
+	 */
 	@PostMapping
 	public ResponseEntity<HospedeDTO> cadastrarHospede(@RequestBody @Valid HospedeEntrypointRequest hospedeRequest,
 			UriComponentsBuilder uriBuilder) {
@@ -40,9 +55,13 @@ public class HospedeController {
 
 		URI uri = uriBuilder.path("/hospedes/{id}").buildAndExpand(hospede.getId()).toUri();
 		return ResponseEntity.created(uri).body(new HospedeDTO(hospede));
-
 	}
 
+	/**
+	 * Método responsável por listar todos os hospedes cadastrados no banco de dados
+	 * 
+	 * @return {@code List<HospedeDTO>}
+	 */
 	@GetMapping
 	public List<HospedeDTO> lista() {
 		
@@ -51,6 +70,13 @@ public class HospedeController {
 		return HospedeDTO.converter(hospedes);
 	}
 
+	/**
+	 * Método responsável por buscar um hospede cadastrado no banco de dados 
+	 * 
+	 * @param {@code Long}
+	 * 
+	 * @return {@code ResponseEntity<HospedeDTO>}
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<HospedeDTO> detalharHospede(@PathVariable Long id) {
 		
@@ -62,6 +88,33 @@ public class HospedeController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	/**
+	 * Método responsável por atualizar as informações de um hospede cadastrado no banco de dados 
+	 * 
+	 * @param {@code Long}
+	 * 
+	 * @return {@code ResponseEntity<HospedeDTO>}
+	 */
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<HospedeDTO> atualizar(@PathVariable Long id, @RequestBody @Valid HospedeEntrypointRequest hospedeRequest) {
+		
+		Optional<Hospede> optional = hospedeRepository.findById(id);
+		if (optional.isPresent()) {
+			Hospede topico = hospedeRequest.atualizar(id, hospedeRepository);
+			return ResponseEntity.ok(new HospedeDTO(topico));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	/**
+	 * Método responsável por realizar a deleção de um hospede cadastrado no banco de dados 
+	 * 
+	 * @param {@code Long}
+	 * 
+	 * @return {@code ResponseEntity<?>}
+	 */
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> deletarHospede(@PathVariable Long id) {
@@ -74,5 +127,4 @@ public class HospedeController {
 		
 		return ResponseEntity.notFound().build();
 	}
-
 }
