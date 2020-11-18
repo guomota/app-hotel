@@ -63,7 +63,7 @@ public class HospedeController {
 	 * @return {@code List<HospedeDTO>}
 	 */
 	@GetMapping
-	public List<HospedeDTO> lista() {
+	public List<HospedeDTO> listarHospedes() {
 		
 		List<Hospede> hospedes = hospedeRepository.findAll();
 
@@ -77,10 +77,10 @@ public class HospedeController {
 	 * 
 	 * @return {@code ResponseEntity<HospedeDTO>}
 	 */
-	@GetMapping("/{id}")
-	public ResponseEntity<HospedeDTO> detalharHospede(@PathVariable Long id) {
+	@GetMapping("/{cpf}")
+	public ResponseEntity<HospedeDTO> detalharHospede(@PathVariable String cpf) {
 		
-		Optional<Hospede> hospede = hospedeRepository.findById(id);
+		Optional<Hospede> hospede = hospedeRepository.findByCpf(cpf);
 		if (hospede.isPresent()) {
 			return ResponseEntity.ok(new HospedeDTO(hospede.get()));
 		}
@@ -115,13 +115,13 @@ public class HospedeController {
 	 * 
 	 * @return {@code ResponseEntity<?>}
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{cpf}")
 	@Transactional
-	public ResponseEntity<?> deletarHospede(@PathVariable Long id) {
+	public ResponseEntity<?> deletarHospede(@PathVariable String cpf) {
 		
-		Optional<Hospede> hospede = hospedeRepository.findById(id);
+		Optional<Hospede> hospede = hospedeRepository.findByCpf(cpf);
 		if (hospede.isPresent()) {
-			hospedeRepository.deleteById(id);
+			hospedeRepository.deleteById(hospede.get().getId());
 			return ResponseEntity.ok().build();
 		}
 		
