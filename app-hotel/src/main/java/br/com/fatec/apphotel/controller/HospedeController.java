@@ -26,7 +26,7 @@ import br.com.fatec.apphotel.modelo.Hospede;
 import br.com.fatec.apphotel.repository.HospedeRepository;
 
 /**
- * Classe reesponsável por conter os endpoints referente ao hospede
+ * Classe responsável por conter os endpoints referente ao hospede
  * 
  * @author Gustavo Mota
  * @since 17/11/2020
