@@ -9,12 +9,12 @@ import javax.persistence.Id;
 public class Suite {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String tipo;
 	private Double valorDiaria;
 	private String disponivel;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	public String getTipo() {
@@ -26,7 +26,7 @@ public class Suite {
 	public String getDisponivel() {
 		return disponivel;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public void setTipo(String tipo) {

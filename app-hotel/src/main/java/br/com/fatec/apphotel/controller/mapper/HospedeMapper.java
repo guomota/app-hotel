@@ -11,17 +11,11 @@ public class HospedeMapper {
 	public static Hospede toDomain(HospedeEntrypointRequest hospedeEntrypointModelRequest) {
 
 		Hospede hospedeDomain = new Hospede();
-		hospedeDomain.setBairro(hospedeEntrypointModelRequest.getBairro());
-		hospedeDomain.setCep(hospedeEntrypointModelRequest.getCep());
-		hospedeDomain.setCidade(hospedeEntrypointModelRequest.getCidade());
-		hospedeDomain.setComplemento(hospedeEntrypointModelRequest.getComplemento());
 		hospedeDomain.setCpf(hospedeEntrypointModelRequest.getCpf());
+		hospedeDomain.setRg(hospedeEntrypointModelRequest.getRg());
 		hospedeDomain.setEmail(hospedeEntrypointModelRequest.getEmail());
-		hospedeDomain.setLogradouro(hospedeEntrypointModelRequest.getLogradouro());
 		hospedeDomain.setNome(hospedeEntrypointModelRequest.getNome());
-		hospedeDomain.setNumero(hospedeEntrypointModelRequest.getNumero());
 		hospedeDomain.setTelefone(hospedeEntrypointModelRequest.getTelefone());
-		hospedeDomain.setUf(hospedeEntrypointModelRequest.getUf());
 
 		return hospedeDomain;
 	}

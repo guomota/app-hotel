@@ -1,18 +1,21 @@
 package br.com.fatec.apphotel.controller;
 
 import java.net.URI;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.fatec.apphotel.controller.dto.HospedeDTO;
+import br.com.fatec.apphotel.controller.dto.SuiteDTO;
 import br.com.fatec.apphotel.controller.mapper.SuiteMapper;
 import br.com.fatec.apphotel.controller.request.SuiteEntrypointRequest;
 import br.com.fatec.apphotel.modelo.Suite;
@@ -32,7 +35,7 @@ public class SuiteController {
 	private SuiteRepository suiteRepository;
 	
 	@PostMapping
-	public ResponseEntity<HospedeDTO> cadastrarSuite(@RequestBody @Valid SuiteEntrypointRequest suiteRequest,
+	public ResponseEntity<SuiteDTO> cadastrarSuite(@RequestBody @Valid SuiteEntrypointRequest suiteRequest,
 			UriComponentsBuilder uriBuilder) {
 
 		Suite suite = SuiteMapper.toDomain(suiteRequest);
@@ -40,7 +43,18 @@ public class SuiteController {
 
 		URI uri = uriBuilder.path("/suites/{id}").buildAndExpand(suite.getId()).toUri();
 		
-		return null;
+		return ResponseEntity.created(uri).body(new SuiteDTO(suite));
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<SuiteDTO> detalharHospede(@PathVariable Long id) {
+		
+		Optional<Suite> suite = suiteRepository.findById(id);
+		if (suite.isPresent()) {
+			return ResponseEntity.ok(new SuiteDTO(suite.get()));
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 
 }

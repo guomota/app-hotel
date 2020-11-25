@@ -7,7 +7,6 @@ public class SuiteEntrypointRequest {
 	@NotBlank(message =  "O campo tipo é obrigátorio")
 	private String tipo;
 	
-	@NotBlank(message =  "O campo valor é obrigátorio")
 	private Double valor;
 	
 	private String status;
