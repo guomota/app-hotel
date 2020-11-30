@@ -7,14 +7,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProdutoDTO {
+    private Long codigo;
     private String descricao;
     private BigDecimal valor;
 
     public  ProdutoDTO (Produto produto){
         super();
+        this.codigo = produto.getCodigo ();
         this.descricao = produto.getDescricao ();
         this.valor = produto.getValor ();
 
+    }
+
+    public Long getCodigo () {
+        return codigo;
+    }
+
+    public void setCodigo ( Long codigo ) {
+        this.codigo = codigo;
     }
 
     public String getDescricao () {

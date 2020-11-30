@@ -10,7 +10,6 @@ public class ProdutoEntrypointRequest {
     @NotBlank(message = "O campo descricao é obrigátorio")
     private String descricao;
 
-    @NotBlank(message = "O campo valor é obrigátorio")
     private BigDecimal valor;
 
     public String getDescricao () {
