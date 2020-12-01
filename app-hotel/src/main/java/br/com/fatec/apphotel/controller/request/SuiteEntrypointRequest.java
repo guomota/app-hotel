@@ -2,6 +2,9 @@ package br.com.fatec.apphotel.controller.request;
 
 import javax.validation.constraints.NotBlank;
 
+import br.com.fatec.apphotel.modelo.Suite;
+import br.com.fatec.apphotel.repository.SuiteRepository;
+
 public class SuiteEntrypointRequest {
 	
 	@NotBlank(message =  "O campo tipo é obrigátorio")
@@ -28,5 +31,16 @@ public class SuiteEntrypointRequest {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public Suite atualizar(Long id, SuiteRepository suiteRepository) {
+		
+		Suite suite = suiteRepository.getOne(id);
+		
+		suite.setDisponivel(this.status);
+		suite.setTipo(this.tipo);
+		suite.setValorDiaria(this.valor);
+		
+		return suite;
 	}
 }

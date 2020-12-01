@@ -1,15 +1,19 @@
 package br.com.fatec.apphotel.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,12 +50,46 @@ public class SuiteController {
 		return ResponseEntity.created(uri).body(new SuiteDTO(suite));
 	}
 	
+	@GetMapping
+	public List<SuiteDTO> listarHospedes() {
+		
+		List<Suite> suites = suiteRepository.findAll();
+
+		return SuiteDTO.converter(suites);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<SuiteDTO> detalharHospede(@PathVariable Long id) {
 		
 		Optional<Suite> suite = suiteRepository.findById(id);
 		if (suite.isPresent()) {
 			return ResponseEntity.ok(new SuiteDTO(suite.get()));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<SuiteDTO> atualizar(@PathVariable Long id, @RequestBody @Valid SuiteEntrypointRequest suiteRequest) {
+		
+		Optional<Suite> optional = suiteRepository.findById(id);
+		if (optional.isPresent()) {
+			Suite topico = suiteRequest.atualizar(id, suiteRepository);
+			return ResponseEntity.ok(new SuiteDTO(topico));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> deletarSuite(@PathVariable Long id) {
+		
+		Optional<Suite> suite = suiteRepository.findById(id);
+		if (suite.isPresent()) {
+			suiteRepository.deleteById(suite.get().getId());
+			return ResponseEntity.ok().build();
 		}
 		
 		return ResponseEntity.notFound().build();
