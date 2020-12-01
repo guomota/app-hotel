@@ -1,7 +1,5 @@
 package br.com.fatec.apphotel.modelo;
 
-import br.com.fatec.apphotel.objeto.PermissaoEnum;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +15,7 @@ public class Funcionario {
     private String nome;
     private String usuario;
     private String senha;
-    private PermissaoEnum permissao;
+    private String permissao;
 
     public Long getId() {
         return id;
@@ -35,7 +33,7 @@ public class Funcionario {
         return senha;
     }
 
-    public PermissaoEnum getPermissao() {
+    public String getPermissao() {
         return permissao;
     }
 
@@ -55,7 +53,7 @@ public class Funcionario {
         this.senha = senha;
     }
 
-    public void setPermissao(PermissaoEnum permissao) {
+    public void setPermissao(String permissao) {
         this.permissao = permissao;
     }
 

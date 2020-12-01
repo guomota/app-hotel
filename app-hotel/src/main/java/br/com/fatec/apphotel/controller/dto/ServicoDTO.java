@@ -1,21 +1,21 @@
 package br.com.fatec.apphotel.controller.dto;
 
-import br.com.fatec.apphotel.modelo.Produto;
+import br.com.fatec.apphotel.modelo.Servico;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProdutoDTO {
+public class ServicoDTO {
     private Long codigo;
     private String descricao;
     private BigDecimal valor;
 
-    public  ProdutoDTO (Produto produto){
+    public  ServicoDTO (Servico servico){
         super();
-        this.codigo = produto.getCodigo ();
-        this.descricao = produto.getDescricao ();
-        this.valor = produto.getValor ();
+        this.codigo = servico.getCodigo ();
+        this.descricao = servico.getDescricao ();
+        this.valor = servico.getValor ();
 
     }
 
@@ -43,7 +43,7 @@ public class ProdutoDTO {
         this.valor = valor;
     }
 
-    public static List<ProdutoDTO> converter ( List<Produto> produtos ) {
-        return produtos.stream ( ).map ( ProdutoDTO::new ).collect ( Collectors.toList ( ) );
+    public static List<ServicoDTO> converter ( List<Servico> servicos ) {
+        return servicos.stream ( ).map ( ServicoDTO::new ).collect ( Collectors.toList ( ) );
     }
 }

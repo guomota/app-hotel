@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,72 +28,73 @@ import br.com.fatec.apphotel.repository.SuiteRepository;
 
 /**
  * Classe reesponsável por conter os endpoints referente as suítes
- * 
+ *
  * @author Gustavo Mota
  * @since 18/11/2020
  */
+@Api(value = "SuiteController", tags = "Suite Controller", description = "Controller de Suites")
 @RestController
 @RequestMapping("/suites")
 public class SuiteController {
-	
-	@Autowired
-	private SuiteRepository suiteRepository;
-	
-	@PostMapping
-	public ResponseEntity<SuiteDTO> cadastrarSuite(@RequestBody @Valid SuiteEntrypointRequest suiteRequest,
-			UriComponentsBuilder uriBuilder) {
 
-		Suite suite = SuiteMapper.toDomain(suiteRequest);
-		suiteRepository.save(suite);
+    @Autowired
+    private SuiteRepository suiteRepository;
 
-		URI uri = uriBuilder.path("/suites/{id}").buildAndExpand(suite.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(new SuiteDTO(suite));
-	}
-	
-	@GetMapping
-	public List<SuiteDTO> listarHospedes() {
-		
-		List<Suite> suites = suiteRepository.findAll();
+    @PostMapping
+    public ResponseEntity<SuiteDTO> cadastrarSuite ( @RequestBody @Valid SuiteEntrypointRequest suiteRequest ,
+                                                     UriComponentsBuilder uriBuilder ) {
 
-		return SuiteDTO.converter(suites);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<SuiteDTO> detalharHospede(@PathVariable Long id) {
-		
-		Optional<Suite> suite = suiteRepository.findById(id);
-		if (suite.isPresent()) {
-			return ResponseEntity.ok(new SuiteDTO(suite.get()));
-		}
-		
-		return ResponseEntity.notFound().build();
-	}
-	
-	@PutMapping("/{id}")
-	@Transactional
-	public ResponseEntity<SuiteDTO> atualizar(@PathVariable Long id, @RequestBody @Valid SuiteEntrypointRequest suiteRequest) {
-		
-		Optional<Suite> optional = suiteRepository.findById(id);
-		if (optional.isPresent()) {
-			Suite topico = suiteRequest.atualizar(id, suiteRepository);
-			return ResponseEntity.ok(new SuiteDTO(topico));
-		}
-		
-		return ResponseEntity.notFound().build();
-	}
-	
-	@DeleteMapping("/{id}")
-	@Transactional
-	public ResponseEntity<?> deletarSuite(@PathVariable Long id) {
-		
-		Optional<Suite> suite = suiteRepository.findById(id);
-		if (suite.isPresent()) {
-			suiteRepository.deleteById(suite.get().getId());
-			return ResponseEntity.ok().build();
-		}
-		
-		return ResponseEntity.notFound().build();
-	}
+        Suite suite = SuiteMapper.toDomain ( suiteRequest );
+        suiteRepository.save ( suite );
+
+        URI uri = uriBuilder.path ( "/suites/{id}" ).buildAndExpand ( suite.getId ( ) ).toUri ( );
+
+        return ResponseEntity.created ( uri ).body ( new SuiteDTO ( suite ) );
+    }
+
+    @GetMapping
+    public List<SuiteDTO> listarSuite () {
+
+        List<Suite> suites = suiteRepository.findAll ( );
+
+        return SuiteDTO.converter ( suites );
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<SuiteDTO> detalharSuite ( @PathVariable Long id ) {
+
+        Optional<Suite> suite = suiteRepository.findById ( id );
+        if (suite.isPresent ( )) {
+            return ResponseEntity.ok ( new SuiteDTO ( suite.get ( ) ) );
+        }
+
+        return ResponseEntity.notFound ( ).build ( );
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<SuiteDTO> atualizarSuite ( @PathVariable Long id , @RequestBody @Valid SuiteEntrypointRequest suiteRequest ) {
+
+        Optional<Suite> optional = suiteRepository.findById ( id );
+        if (optional.isPresent ( )) {
+            Suite topico = suiteRequest.atualizar ( id , suiteRepository );
+            return ResponseEntity.ok ( new SuiteDTO ( topico ) );
+        }
+
+        return ResponseEntity.notFound ( ).build ( );
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deletarSuite ( @PathVariable Long id ) {
+
+        Optional<Suite> suite = suiteRepository.findById ( id );
+        if (suite.isPresent ( )) {
+            suiteRepository.deleteById ( suite.get ( ).getId ( ) );
+            return ResponseEntity.ok ( ).build ( );
+        }
+
+        return ResponseEntity.notFound ( ).build ( );
+    }
 
 }

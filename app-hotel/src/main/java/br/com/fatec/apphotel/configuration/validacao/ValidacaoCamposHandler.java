@@ -1,8 +1,9 @@
-package br.com.fatec.apphotel.config.validacao;
+package br.com.fatec.apphotel.configuration.validacao;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.fatec.apphotel.configuration.validacao.ValidacaoCamposDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,7 +22,7 @@ public class ValidacaoCamposHandler {
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<ValidacaoCamposDTO> handle(MethodArgumentNotValidException exception) {
+	public List<ValidacaoCamposDTO> handle( MethodArgumentNotValidException exception) {
 
 		List<ValidacaoCamposDTO> validacaoCamposDTO = new ArrayList<>();
 

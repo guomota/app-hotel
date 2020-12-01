@@ -1,12 +1,12 @@
 package br.com.fatec.apphotel.controller.request;
 
-import br.com.fatec.apphotel.modelo.Produto;
-import br.com.fatec.apphotel.repository.ProdutoRepository;
+import br.com.fatec.apphotel.modelo.Servico;
+import br.com.fatec.apphotel.repository.ServicoRepository;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
-public class ProdutoEntrypointRequest {
+public class ServicoEntrypointRequest {
     @NotBlank(message = "O campo descricao é obrigátorio")
     private String descricao;
 
@@ -28,13 +28,13 @@ public class ProdutoEntrypointRequest {
         this.valor = valor;
     }
 
-    public Produto atualizar ( Long codigo , ProdutoRepository produtoRepository ) {
-        Produto produto = produtoRepository.getOne ( codigo );
+    public Servico atualizar ( Long codigo , ServicoRepository servicoRepository ) {
+        Servico servico = servicoRepository.getOne ( codigo );
 
-        produto.setDescricao ( this.descricao );
-        produto.setValor ( this.valor );
+        servico.setDescricao ( this.descricao );
+        servico.setValor ( this.valor );
 
-        return produto;
+        return servico;
     }
 
 }

@@ -1,7 +1,6 @@
 package br.com.fatec.apphotel.controller.dto;
 
 import br.com.fatec.apphotel.modelo.Funcionario;
-import br.com.fatec.apphotel.objeto.PermissaoEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +10,7 @@ public class FuncionarioDTO {
     private Long id;
     private String nome;
     private String usuario;
-    private PermissaoEnum permissao;
+    private String permissao;
 
     public FuncionarioDTO ( Funcionario funcionario ) {
         super ( );
@@ -33,7 +32,7 @@ public class FuncionarioDTO {
         return usuario;
     }
 
-    public PermissaoEnum getPermissao () {
+    public String getPermissao () {
         return permissao;
     }
 

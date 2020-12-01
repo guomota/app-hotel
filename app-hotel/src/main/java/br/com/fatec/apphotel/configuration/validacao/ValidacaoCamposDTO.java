@@ -1,4 +1,4 @@
-package br.com.fatec.apphotel.config.validacao;
+package br.com.fatec.apphotel.configuration.validacao;
 
 public class ValidacaoCamposDTO {
 	

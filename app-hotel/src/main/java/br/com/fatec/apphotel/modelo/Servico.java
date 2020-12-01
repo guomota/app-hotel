@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
-public class Produto {
+public class Servico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
