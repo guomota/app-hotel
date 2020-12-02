@@ -12,6 +12,6 @@ INSERT INTO SERVICO (descricao, valor) VALUES
 
 INSERT INTO FUNCIONARIO (nome, usuario,senha,permissao) VALUES
 
-('Administrador', 'admin', 'admin', 'ADMIN' ),
-('João', 'joao', '123456', 'USER' );
+('Administrador', 'admin', '$2a$10$ibgPMyULtOXI8fqGI2R/nO.bP/XagIvMNzWGC4lEUSJbgAwcV8T/O', 'ADMIN' ),
+('João', 'joao', '$2a$10$Y/sDVq2n19CW73/ueUqb2u/N16dxqUVnNgjtav0oFzW/DycTxMkIG', 'USER' );
 

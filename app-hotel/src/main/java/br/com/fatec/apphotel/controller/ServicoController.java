@@ -8,6 +8,7 @@ import br.com.fatec.apphotel.repository.ServicoRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -39,6 +40,7 @@ public class ServicoController {
      * @return {@code ResponseEntity<ServicoDTO>}
      */
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ServicoDTO> cadastrarServico ( @RequestBody @Valid ServicoEntrypointRequest servicoRequest ,
                                                          UriComponentsBuilder uriBuilder ) {
 
@@ -55,6 +57,7 @@ public class ServicoController {
      * @return {@code List<ServicoDTO>}
      */
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public List<ServicoDTO> listarServicos () {
 
         List<Servico> servicos = servicoRepository.findAll ( );
@@ -69,6 +72,7 @@ public class ServicoController {
      * @return {@code ResponseEntity<ServicoDTO>}
      */
     @GetMapping("/{codigo}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ServicoDTO> detalharServico ( @PathVariable Long codigo ) {
 
         Optional<Servico> servico = servicoRepository.findByCodigo ( codigo );
@@ -87,6 +91,7 @@ public class ServicoController {
      */
     @PutMapping(value = "/{codigo}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicoDTO> atualizarServico ( @PathVariable Long codigo , @RequestBody @Valid ServicoEntrypointRequest servicoRequest ) {
 
         Optional<Servico> optional = servicoRepository.findByCodigo ( codigo );
@@ -106,6 +111,7 @@ public class ServicoController {
      */
     @DeleteMapping("/{codigo}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletarServico ( @PathVariable Long codigo ) {
 
         Optional<Servico> servico = servicoRepository.findByCodigo ( codigo );

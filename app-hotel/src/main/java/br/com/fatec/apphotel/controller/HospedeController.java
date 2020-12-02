@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +48,7 @@ public class HospedeController {
      * @return {@code ResponseEntity<HospedeDTO>}
      */
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> cadastrarHospede ( @RequestBody @Valid HospedeEntrypointRequest hospedeRequest ,
                                                          UriComponentsBuilder uriBuilder ) {
 
@@ -63,6 +65,7 @@ public class HospedeController {
      * @return {@code List<HospedeDTO>}
      */
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public List<HospedeDTO> listarHospedes () {
 
         List<Hospede> hospedes = hospedeRepository.findAll ( );
@@ -77,6 +80,7 @@ public class HospedeController {
      * @return {@code ResponseEntity<HospedeDTO>}
      */
     @GetMapping("/{cpf}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> detalharHospede ( @PathVariable String cpf ) {
 
         Optional<Hospede> hospede = hospedeRepository.findByCpf ( cpf );
@@ -95,6 +99,7 @@ public class HospedeController {
      */
     @PutMapping("/{id}")
     @Transactional
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> atualizarHospede ( @PathVariable Long id , @RequestBody @Valid HospedeEntrypointRequest hospedeRequest ) {
 
         Optional<Hospede> optional = hospedeRepository.findById ( id );
@@ -114,6 +119,7 @@ public class HospedeController {
      */
     @DeleteMapping("/{cpf}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletarHospede ( @PathVariable String cpf ) {
 
         Optional<Hospede> hospede = hospedeRepository.findByCpf ( cpf );

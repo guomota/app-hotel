@@ -8,6 +8,7 @@ import br.com.fatec.apphotel.repository.FuncionarioRepository;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Api(value = "FuncionarioController", tags = "Funcionario Controller", description = "Controller de Funcionarios")
 @RestController
 @RequestMapping("/funcionarios")
+@PreAuthorize("hasRole('ADMIN')")
 public class FuncionarioController {
 
     @Autowired
@@ -71,7 +73,7 @@ public class FuncionarioController {
     @GetMapping("/{nome}")
     public ResponseEntity<FuncionarioDTO> detalharFuncionario ( @PathVariable String nome ) {
 
-        Optional<Funcionario> funcionario = funcionarioRepository.findByNome ( nome );
+        Optional<Funcionario> funcionario = funcionarioRepository.findByUsuario ( nome );
         if (funcionario.isPresent ( )) {
             return ResponseEntity.ok ( new FuncionarioDTO ( funcionario.get ( ) ) );
         }

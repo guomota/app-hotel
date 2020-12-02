@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +42,7 @@ public class SuiteController {
     private SuiteRepository suiteRepository;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<SuiteDTO> cadastrarSuite ( @RequestBody @Valid SuiteEntrypointRequest suiteRequest ,
                                                      UriComponentsBuilder uriBuilder ) {
 
@@ -53,6 +55,7 @@ public class SuiteController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public List<SuiteDTO> listarSuite () {
 
         List<Suite> suites = suiteRepository.findAll ( );
@@ -73,6 +76,7 @@ public class SuiteController {
 
     @PutMapping("/{id}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SuiteDTO> atualizarSuite ( @PathVariable Long id , @RequestBody @Valid SuiteEntrypointRequest suiteRequest ) {
 
         Optional<Suite> optional = suiteRepository.findById ( id );
@@ -86,6 +90,7 @@ public class SuiteController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletarSuite ( @PathVariable Long id ) {
 
         Optional<Suite> suite = suiteRepository.findById ( id );

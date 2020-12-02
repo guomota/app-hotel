@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,70 +37,75 @@ import io.swagger.annotations.Api;
 @RestController
 @RequestMapping("/reservas")
 public class ReservaController {
-	
-	@Autowired
+
+    @Autowired
     private ReservaRepository reservaRepository;
-	
+
     @PostMapping
-    public ResponseEntity<ReservaDTO> cadastrarReserva(@RequestBody @Valid ReservaEntrypointRequest reservaRequest, UriComponentsBuilder uriBuilder) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ReservaDTO> cadastrarReserva ( @RequestBody @Valid ReservaEntrypointRequest reservaRequest , UriComponentsBuilder uriBuilder ) {
 
-        Reserva reserva = ReservaMapper.toDomain (reservaRequest);
-        reservaRepository.save(reserva);
+        Reserva reserva = ReservaMapper.toDomain ( reservaRequest );
+        reservaRepository.save ( reserva );
 
-        URI uri = uriBuilder.path ("/reservas/{id}" ).buildAndExpand (reserva.getId()).toUri();
-        return ResponseEntity.created (uri).body(new ReservaDTO(reserva) );
+        URI uri = uriBuilder.path ( "/reservas/{id}" ).buildAndExpand ( reserva.getId ( ) ).toUri ( );
+        return ResponseEntity.created ( uri ).body ( new ReservaDTO ( reserva ) );
     }
-    
+
     @GetMapping
-    public List<ReservaDTO> listarHospedes () {
+    @PreAuthorize("hasRole('USER')")
+    public List<ReservaDTO> listarReservas () {
 
-        List<Reserva> reserva = reservaRepository.findAll( );
+        List<Reserva> reserva = reservaRepository.findAll ( );
 
-        return ReservaDTO.converter(reserva);
+        return ReservaDTO.converter ( reserva );
     }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<ReservaDTO> detalharHospede(@PathVariable Long id) {
 
-        Optional<Reserva> reserva = reservaRepository.findById(id);
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ReservaDTO> detalharReserva ( @PathVariable Long id ) {
+
+        Optional<Reserva> reserva = reservaRepository.findById ( id );
         if (reserva.isPresent ( )) {
-            return ResponseEntity.ok(new ReservaDTO(reserva.get()));
+            return ResponseEntity.ok ( new ReservaDTO ( reserva.get ( ) ) );
         }
 
         return ResponseEntity.notFound ( ).build ( );
     }
-    
+
     /**
-     * Método responsável por atualizar as informações de um hospede cadastrado no banco de dados
+     * Método responsável por atualizar as informações de uma reserva cadastrado no banco de dados
      *
      * @param {@code Long}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ReservaDTO> atualizarReserva(@PathVariable Long id, @RequestBody @Valid ReservaEntrypointRequest reservaRequest) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ReservaDTO> atualizarReserva ( @PathVariable Long id , @RequestBody @Valid ReservaEntrypointRequest reservaRequest ) {
 
-        Optional<Reserva> optional = reservaRepository.findById(id);
-        
+        Optional<Reserva> optional = reservaRepository.findById ( id );
+
         if (optional.isPresent ( )) {
-            Reserva topico = reservaRequest.atualizar(id, reservaRepository);
-            return ResponseEntity.ok (new ReservaDTO(topico));
+            Reserva topico = reservaRequest.atualizar ( id , reservaRepository );
+            return ResponseEntity.ok ( new ReservaDTO ( topico ) );
         }
 
         return ResponseEntity.notFound ( ).build ( );
     }
-    
+
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletarReserva(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deletarReserva ( @PathVariable Long id ) {
 
-        Optional<Reserva> reserva = reservaRepository.findById(id);
+        Optional<Reserva> reserva = reservaRepository.findById ( id );
         if (reserva.isPresent ( )) {
-        	reservaRepository.deleteById(reserva.get().getId());
+            reservaRepository.deleteById ( reserva.get ( ).getId ( ) );
             return ResponseEntity.ok ( ).build ( );
         }
 
-        return ResponseEntity.notFound().build ();
+        return ResponseEntity.notFound ( ).build ( );
     }
 
 }
