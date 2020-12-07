@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +48,7 @@ public class HospedeController {
      * @param {@code UriComponentsBuilder}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
+    @ApiOperation(value = "Cadastrar Hospede", nickname = "cadastrarHospede")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> cadastrarHospede ( @RequestBody @Valid HospedeEntrypointRequest hospedeRequest ,
@@ -64,6 +66,7 @@ public class HospedeController {
      *
      * @return {@code List<HospedeDTO>}
      */
+    @ApiOperation(value = "listar Hospede", nickname = "listarHospede")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<HospedeDTO> listarHospedes () {
@@ -79,6 +82,7 @@ public class HospedeController {
      * @param {@code Long}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
+    @ApiOperation(value = "detalhar Hospede", nickname = "detalharHospede")
     @GetMapping("/{cpf}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> detalharHospede ( @PathVariable String cpf ) {
@@ -97,6 +101,7 @@ public class HospedeController {
      * @param {@code Long}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
+    @ApiOperation(value = "Atualizar Hospede", nickname = "atualizarHospede")
     @PutMapping("/{id}")
     @Transactional
     @PreAuthorize("hasRole('USER')")
@@ -117,6 +122,7 @@ public class HospedeController {
      * @param {@code Long}
      * @return {@code ResponseEntity<?>}
      */
+    @ApiOperation(value = "Deletar Hospede", nickname = "deletarHospede")
     @DeleteMapping("/{cpf}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

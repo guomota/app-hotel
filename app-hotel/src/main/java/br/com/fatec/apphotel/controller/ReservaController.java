@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +42,7 @@ public class ReservaController {
     @Autowired
     private ReservaRepository reservaRepository;
 
+    @ApiOperation(value = "Cadastrar Reserva", nickname = "cadastrarReserva")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReservaDTO> cadastrarReserva ( @RequestBody @Valid ReservaEntrypointRequest reservaRequest , UriComponentsBuilder uriBuilder ) {
@@ -52,6 +54,7 @@ public class ReservaController {
         return ResponseEntity.created ( uri ).body ( new ReservaDTO ( reserva ) );
     }
 
+    @ApiOperation(value = "Listar Reserva", nickname = "listarReserva")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<ReservaDTO> listarReservas () {
@@ -61,6 +64,7 @@ public class ReservaController {
         return ReservaDTO.converter ( reserva );
     }
 
+    @ApiOperation(value = "Detalhar Reserva", nickname = "detalharReserva")
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReservaDTO> detalharReserva ( @PathVariable Long id ) {
@@ -79,6 +83,7 @@ public class ReservaController {
      * @param {@code Long}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
+    @ApiOperation(value = "Atualizar Reserva", nickname = "atualizarReserva")
     @PutMapping("/{id}")
     @Transactional
     @PreAuthorize("hasRole('USER')")
@@ -94,6 +99,7 @@ public class ReservaController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    @ApiOperation(value = "deletar Reserva", nickname = "deletarReserva")
     @DeleteMapping("/{id}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

@@ -6,6 +6,7 @@ import br.com.fatec.apphotel.controller.request.ServicoEntrypointRequest;
 import br.com.fatec.apphotel.modelo.Servico;
 import br.com.fatec.apphotel.repository.ServicoRepository;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +40,7 @@ public class ServicoController {
      * @param {@code UriComponentsBuilder}
      * @return {@code ResponseEntity<ServicoDTO>}
      */
+    @ApiOperation(value = "Cadastrar Servico", nickname = "cadastrarServico")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ServicoDTO> cadastrarServico ( @RequestBody @Valid ServicoEntrypointRequest servicoRequest ,
@@ -56,6 +58,7 @@ public class ServicoController {
      *
      * @return {@code List<ServicoDTO>}
      */
+    @ApiOperation(value = "Listar Servico", nickname = "listarServico")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<ServicoDTO> listarServicos () {
@@ -71,6 +74,7 @@ public class ServicoController {
      * @param {@code Long}
      * @return {@code ResponseEntity<ServicoDTO>}
      */
+    @ApiOperation(value = "Detalhar Servico", nickname = "detalharServico")
     @GetMapping("/{codigo}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ServicoDTO> detalharServico ( @PathVariable Long codigo ) {
@@ -89,6 +93,7 @@ public class ServicoController {
      * @param {@code Long}
      * @return {@code ResponseEntity<ServicoDTO>}
      */
+    @ApiOperation(value = "Atualizar Servico", nickname = "atulizarServico")
     @PutMapping(value = "/{codigo}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
@@ -109,6 +114,7 @@ public class ServicoController {
      * @param {@code Long}
      * @return {@code ResponseEntity<?>}
      */
+    @ApiOperation(value = "Deletar Servico", nickname = "deletarServico")
     @DeleteMapping("/{codigo}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

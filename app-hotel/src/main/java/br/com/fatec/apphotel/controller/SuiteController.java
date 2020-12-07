@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +42,7 @@ public class SuiteController {
     @Autowired
     private SuiteRepository suiteRepository;
 
+    @ApiOperation(value = "Cadastrar Suite", nickname = "cadastarSuite")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<SuiteDTO> cadastrarSuite ( @RequestBody @Valid SuiteEntrypointRequest suiteRequest ,
@@ -54,6 +56,7 @@ public class SuiteController {
         return ResponseEntity.created ( uri ).body ( new SuiteDTO ( suite ) );
     }
 
+    @ApiOperation(value = "listar Suite", nickname = "listarSuite")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<SuiteDTO> listarSuite () {
@@ -63,6 +66,7 @@ public class SuiteController {
         return SuiteDTO.converter ( suites );
     }
 
+    @ApiOperation(value = "Detalhar Suite", nickname = "detalharSuite")
     @GetMapping(value = "/{id}")
     public ResponseEntity<SuiteDTO> detalharSuite ( @PathVariable Long id ) {
 
@@ -74,6 +78,7 @@ public class SuiteController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    @ApiOperation(value = "Atualizar Suite", nickname = "atualizarSuite")
     @PutMapping("/{id}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
@@ -88,6 +93,7 @@ public class SuiteController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    @ApiOperation(value = "Deletar Suite", nickname = "deletarSuite")
     @DeleteMapping("/{id}")
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

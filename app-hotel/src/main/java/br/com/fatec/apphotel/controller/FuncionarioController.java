@@ -6,6 +6,7 @@ import br.com.fatec.apphotel.controller.request.FuncionarioEntrypointRequest;
 import br.com.fatec.apphotel.modelo.Funcionario;
 import br.com.fatec.apphotel.repository.FuncionarioRepository;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,6 +41,7 @@ public class FuncionarioController {
      * @param {@code UriComponentsBuilder}
      * @return {@code ResponseEntity<FuncionarioDTO>}
      */
+    @ApiOperation(value = "Cadastrar Funcionario", nickname = "cadastrarFuncionario")
     @PostMapping
     public ResponseEntity<FuncionarioDTO> cadastrarFuncionario ( @RequestBody @Valid FuncionarioEntrypointRequest funcionarioRequest ,
                                                                  UriComponentsBuilder uriBuilder ) {
@@ -56,6 +58,7 @@ public class FuncionarioController {
      *
      * @return {@code List<FuncionarioDTO>}
      */
+    @ApiOperation(value = "Listar Funcionario", nickname = "listarFuncionario")
     @GetMapping
     public List<FuncionarioDTO> listarFuncionarios () {
 
@@ -70,10 +73,11 @@ public class FuncionarioController {
      * @param {@code Long}
      * @return {@code ResponseEntity<HospedeDTO>}
      */
+    @ApiOperation(value = "detalhar Funcionario", nickname = "detalharFuncionario")
     @GetMapping("/{nome}")
-    public ResponseEntity<FuncionarioDTO> detalharFuncionario ( @PathVariable String nome ) {
+    public ResponseEntity<FuncionarioDTO> detalharFuncionario ( @PathVariable String usuario ) {
 
-        Optional<Funcionario> funcionario = funcionarioRepository.findByUsuario ( nome );
+        Optional<Funcionario> funcionario = funcionarioRepository.findByUsuario ( usuario );
         if (funcionario.isPresent ( )) {
             return ResponseEntity.ok ( new FuncionarioDTO ( funcionario.get ( ) ) );
         }
@@ -87,6 +91,7 @@ public class FuncionarioController {
      * @param {@code Long}
      * @return {@code ResponseEntity<FuncionarioDTO>}
      */
+    @ApiOperation(value = "atualizar senha", nickname = "atualizarSenha")
     @PutMapping("/atualizar-senha/{id}")
     @Transactional
     public ResponseEntity<FuncionarioDTO> atualizarSenha ( @PathVariable Long id , @RequestBody @Valid FuncionarioEntrypointRequest funcionarioRequest ) {
@@ -106,6 +111,7 @@ public class FuncionarioController {
      * @param {@code Long}
      * @return {@code ResponseEntity<FuncionarioDTO>}
      */
+    @ApiOperation(value = "Atualizar Funcionario", nickname = "atualizarFuncionario")
     @PutMapping("/atualizar-funcionario/{id}")
     @Transactional
     public ResponseEntity<FuncionarioDTO> atualizarFuncionario ( @PathVariable Long id , @RequestBody @Valid FuncionarioEntrypointRequest funcionarioRequest ) {
@@ -125,6 +131,7 @@ public class FuncionarioController {
      * @param {@code Long}
      * @return {@code ResponseEntity<?>}
      */
+    @ApiOperation(value = "deletar Funcionario", nickname = "deletarFuncionario")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletarFuncionario ( @PathVariable Long id ) {
