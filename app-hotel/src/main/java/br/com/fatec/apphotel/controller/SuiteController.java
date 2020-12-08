@@ -31,7 +31,7 @@ import br.com.fatec.apphotel.repository.SuiteRepository;
 /**
  * Classe reesponsável por conter os endpoints referente as suítes
  *
- * @author Gustavo Mota
+ * @author Rafael Bispo
  * @since 18/11/2020
  */
 @Api(value = "SuiteController", tags = "Suite Controller", description = "Controller de Suites")
@@ -42,6 +42,13 @@ public class SuiteController {
     @Autowired
     private SuiteRepository suiteRepository;
 
+    /**
+     * Método responsável por cadastrar uma suíte no banco de dados
+     *
+     * @param {@code SuiteEntrypointRequest}
+     * @param {@code UriComponentsBuilder}
+     * @return {@code ResponseEntity<SuiteDTO>}
+     */
     @ApiOperation(value = "Cadastrar Suite", nickname = "cadastarSuite")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
@@ -55,7 +62,12 @@ public class SuiteController {
 
         return ResponseEntity.created ( uri ).body ( new SuiteDTO ( suite ) );
     }
-
+    
+    /**
+     * Método responsável por listar todos as suítes cadastradas no banco de dados
+     *
+     * @return {@code List<SuiteDTO>}
+     */
     @ApiOperation(value = "listar Suite", nickname = "listarSuite")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -66,6 +78,12 @@ public class SuiteController {
         return SuiteDTO.converter ( suites );
     }
 
+    /**
+     * Método responsável por buscar uma suíte cadastrada no banco de dados a partir de seu id
+     *
+     * @param {@code Long}
+     * @return {@code ResponseEntity<SuiteDTO>}
+     */
     @ApiOperation(value = "Detalhar Suite", nickname = "detalharSuite")
     @GetMapping(value = "/{id}")
     public ResponseEntity<SuiteDTO> detalharSuite ( @PathVariable Long id ) {
@@ -78,6 +96,12 @@ public class SuiteController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    /**
+     * Método responsável por atualizar as informações de uma suíte cadastrada no banco de dados
+     *
+     * @param {@code Long}
+     * @return {@code ResponseEntity<SuiteDTO>}
+     */
     @ApiOperation(value = "Atualizar Suite", nickname = "atualizarSuite")
     @PutMapping("/{id}")
     @Transactional
@@ -93,6 +117,12 @@ public class SuiteController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    /**
+     * Método responsável por realizar a deleção de uma suíte cadastrada no banco de dados
+     *
+     * @param {@code Long}
+     * @return {@code ResponseEntity<?>}
+     */
     @ApiOperation(value = "Deletar Suite", nickname = "deletarSuite")
     @DeleteMapping("/{id}")
     @Transactional
@@ -107,5 +137,4 @@ public class SuiteController {
 
         return ResponseEntity.notFound ( ).build ( );
     }
-
 }

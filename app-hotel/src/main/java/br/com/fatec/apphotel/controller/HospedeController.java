@@ -53,7 +53,6 @@ public class HospedeController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<HospedeDTO> cadastrarHospede ( @RequestBody @Valid HospedeEntrypointRequest hospedeRequest ,
                                                          UriComponentsBuilder uriBuilder ) {
-
         Hospede hospede = HospedeMapper.toDomain ( hospedeRequest );
         hospedeRepository.save ( hospede );
 

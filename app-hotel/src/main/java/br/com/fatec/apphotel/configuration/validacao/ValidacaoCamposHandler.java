@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Classe responsável por mapear o erro de validação de campos e montar o body de resposta
+ * 
+ * @author Gustavo Mota
+ * @since 05/12/2020
+ *
+ */
 @RestControllerAdvice
 public class ValidacaoCamposHandler {
 

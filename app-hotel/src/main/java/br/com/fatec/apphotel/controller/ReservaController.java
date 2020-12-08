@@ -41,7 +41,14 @@ public class ReservaController {
 
     @Autowired
     private ReservaRepository reservaRepository;
-
+    
+    /**
+     * Método responsável por cadastrar um hospede no banco de dados
+     *
+     * @param {@code ReservaEntrypointRequest}
+     * @param {@code UriComponentsBuilder}
+     * @return {@code ResponseEntity<ReservaDTO>}
+     */
     @ApiOperation(value = "Cadastrar Reserva", nickname = "cadastrarReserva")
     @PostMapping
     @PreAuthorize("hasRole('USER')")
@@ -54,6 +61,11 @@ public class ReservaController {
         return ResponseEntity.created ( uri ).body ( new ReservaDTO ( reserva ) );
     }
 
+    /**
+     * Método responsável por listar todos as reservas cadastradas no banco de dados
+     *
+     * @return {@code List<ReservaDTO>}
+     */
     @ApiOperation(value = "Listar Reserva", nickname = "listarReserva")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -64,6 +76,12 @@ public class ReservaController {
         return ReservaDTO.converter ( reserva );
     }
 
+    /**
+     * Método responsável por buscar uma reserva cadastrada no banco de dados
+     *
+     * @param {@code Long}
+     * @return {@code ResponseEntity<ReservaDTO>}
+     */
     @ApiOperation(value = "Detalhar Reserva", nickname = "detalharReserva")
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
@@ -78,10 +96,10 @@ public class ReservaController {
     }
 
     /**
-     * Método responsável por atualizar as informações de uma reserva cadastrado no banco de dados
+     * Método responsável por atualizar as informações de uma reserva cadastrada no banco de dados
      *
      * @param {@code Long}
-     * @return {@code ResponseEntity<HospedeDTO>}
+     * @return {@code ResponseEntity<ReservaDTO>}
      */
     @ApiOperation(value = "Atualizar Reserva", nickname = "atualizarReserva")
     @PutMapping("/{id}")
@@ -99,6 +117,12 @@ public class ReservaController {
         return ResponseEntity.notFound ( ).build ( );
     }
 
+    /**
+     * Método responsável por realizar a deleção de uma reserva no banco de dados
+     *
+     * @param {@code Long}
+     * @return {@code ResponseEntity<?>}
+     */
     @ApiOperation(value = "deletar Reserva", nickname = "deletarReserva")
     @DeleteMapping("/{id}")
     @Transactional

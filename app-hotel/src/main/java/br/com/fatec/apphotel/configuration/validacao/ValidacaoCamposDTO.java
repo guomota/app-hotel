@@ -1,5 +1,13 @@
 package br.com.fatec.apphotel.configuration.validacao;
 
+/**
+ * Classe responsável por mapear o campo e o 
+ * erro na validação dos campos de entarda
+ * 
+ * @author Gustavo Mota
+ * @since 18/11/2020
+ *
+ */
 public class ValidacaoCamposDTO {
 	
 	private String campo;
